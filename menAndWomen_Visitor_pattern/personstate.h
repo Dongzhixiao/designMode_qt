@@ -77,7 +77,7 @@ class ObjectStructure
 {
 public:
     void Attach(Person *p){elements.append(p);}
-    void Detach(Person *p){elements.removeOne(p);delete p;p = NULL;}  //不确定行为，不知道指针是否实现了操作符==!!
+    void Detach(Person *p){elements.removeOne(p);delete p;p = NULL;}  //不确定行为，不知道指针是否实现了操作符==!!根据main的结果似乎实现了
     void Display(Action *a)
     {
         for(auto e :elements)
