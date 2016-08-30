@@ -18,7 +18,7 @@ public:
         else
         {
             std::cerr<<"unknow sign!";
-            throw;
+            throw 0;
         }
         return _S;
     }

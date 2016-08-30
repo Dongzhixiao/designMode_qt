@@ -6,3 +6,6 @@ HEADERS += \
 
 SOURCES += \
     main.cpp
+
+QT += core
+QT -= gui

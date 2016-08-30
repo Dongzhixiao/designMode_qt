@@ -1,20 +1,19 @@
 #include "sign.h"
 #include "signfactory.h"
-#include <iostream>
-using namespace std;
+#include <QCoreApplication>
+#include <QDebug>
 
 int main (int argc, char * argv[])
 {
+    QCoreApplication app(argc,argv);
+
     Signfactory sf;
     Sign *s = sf.createSign("/");
-    s->setA(1);s->setB(100);
+    s->setA(1);s->setB(1);
     try{
-        cout<<s->getResult();
+        qDebug()<<s->getResult();
     }
     catch(...)
-    {
-        cerr<<"get some error when get the result";
-    }
-    cin.get();
-    return 0;
+    {}
+    return app.exec();
 }
