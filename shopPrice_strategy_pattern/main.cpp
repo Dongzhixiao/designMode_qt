@@ -1,7 +1,12 @@
-#include <iostream>
-#include "cashsuper.h"
+#include "shopprice.h"
+#include <QApplication>
 
 int main(int argc, char *argv[])
 {
-    return 0;
+    QApplication app(argc, argv);
+
+    shopPrice *sp = new shopPrice();
+    sp->show();
+
+    return app.exec();
 }

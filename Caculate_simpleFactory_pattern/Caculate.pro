@@ -2,10 +2,14 @@
 #这个例子是实现一个计算器
 HEADERS += \
     sign.h \
-    signfactory.h
+    signfactory.h \
+    caculate.h
 
 SOURCES += \
-    main.cpp
+    main.cpp \
+    caculate.cpp
 
-QT += core
-QT -= gui
+QT += widgets
+
+FORMS += \
+    caculate.ui

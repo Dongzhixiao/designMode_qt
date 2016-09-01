@@ -1,19 +1,25 @@
 #include "sign.h"
 #include "signfactory.h"
-#include <QCoreApplication>
+#include "caculate.h"
+#include <QApplication>
 #include <QDebug>
 
 int main (int argc, char * argv[])
 {
-    QCoreApplication app(argc,argv);
+    QApplication app(argc,argv);
 
     Signfactory sf;
     Sign *s = sf.createSign("/");
-    s->setA(1);s->setB(1);
+    s->setA(1);s->setB(0);
     try{
         qDebug()<<s->getResult();
     }
     catch(...)
     {}
+    delete s;
+
+    caculate * c = new caculate;
+    c->show();
+
     return app.exec();
 }

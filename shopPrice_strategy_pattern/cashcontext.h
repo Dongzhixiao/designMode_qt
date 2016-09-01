@@ -10,13 +10,17 @@ class CashContext    //策略模式，以相同的方式调用各种算法，减
 public:
     CashContext(QString qs)   //策略模式封装了变化,判断在策略类的函数里面完成,但是还有更好的方法：反射技术(抽象工厂模式中再学！)
     {
-        if(qs == "正常")
+        if(qs == QString::fromUtf8("正常收费"))
         {
             cs = new CashNormal();
         }
-        else if(qs == "打八折")
+        else if(qs == QString::fromUtf8("打八折"))
         {
             cs = new CashRebate(0.8);
+        }
+        else if(qs == QString::fromUtf8("满300返100"))
+        {
+            cs = new CashReturn(300,100);
         }
     }
     double getResult(double money)

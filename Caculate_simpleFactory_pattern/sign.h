@@ -10,48 +10,50 @@ protected:
 public:
     void setA(double a)
     {
-        _A=a;
+        _A = a;
     }
     void setB(double b)
     {
-        _B=b;
+        _B = b;
     }
     double getA(){return _A;}
     double getB(){return _B;}
 
     virtual double getResult() = 0;
+
+    virtual ~Sign(){}   //根据《Effect C++》条款七：任何class只要带有virtual函数都几乎确定应该也有一个virtual析构函数。
 };
 //下面用到继承
-class signAdd:public Sign   //加法类，继承符号类
+class signAdd final:public Sign   //加法类，继承符号类
 {
-    double getResult()
+    double getResult() override
     {
         _Result = _A + _B;
         return _Result;
     }
 };
 
-class signMinus:public Sign  //减法类，继承符号类
+class signMinus final:public Sign  //减法类，继承符号类
 {
-    double getResult()
+    double getResult() override
     {
         _Result = _A - _B;
         return _Result;
     }
 };
 
-class signMultiply:public Sign
+class signMultiply final:public Sign
 {
-    double getResult()
+    double getResult() override
     {
         _Result = _A * _B;
         return _Result;
     }
 };
 
-class signDivide:public Sign
+class signDivide final:public Sign
 {
-    double getResult()
+    double getResult() override
     {
         if(_B == 0){
             std::cerr<<"can't divide zero"<<std::endl;

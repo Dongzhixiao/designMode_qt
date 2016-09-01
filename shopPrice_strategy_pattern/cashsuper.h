@@ -2,19 +2,22 @@
 #define CASHSUPER
 
 class CashSuper{
-protected:
-    virtual double acceptMoney(double money);
+public:
+    virtual ~CashSuper(){}
+
+    virtual double acceptMoney(double money) = 0;
 };
 
-class CashNormal:public CashSuper
+class CashNormal final:public CashSuper
 {
-    double acceptMoney(double money)
+//protected:
+    double acceptMoney(double money) override
     {
         return money;
     }
 };
 
-class CashRebate:public CashSuper
+class CashRebate final:public CashSuper
 {
     double moneyRebate = 1;
 public:
@@ -22,9 +25,30 @@ public:
     {
         moneyRebate = rebate;
     }
-    double acceptMoney(double money)
+//protected:
+    double acceptMoney(double money) override
     {
         return money*moneyRebate;
+    }
+};
+
+class CashReturn final:public CashSuper
+{
+    double moneyCondition = 0;
+    double moneyReturn = 0;
+public:
+    CashReturn(double mc,double mr)
+    {
+        moneyCondition = mc;
+        moneyReturn = mr;
+    }
+//protected:
+    double acceptMoney(double money) override
+    {
+        double result = money;
+        if(money >= moneyCondition)
+            result = money - (money/moneyCondition) * moneyReturn;
+        return result;
     }
 };
 
