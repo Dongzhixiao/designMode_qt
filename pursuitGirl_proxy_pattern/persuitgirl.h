@@ -31,6 +31,7 @@ public:
     virtual void GiveDolls()=0;
     virtual void GiveFlowers()=0;
     virtual void GiveChocolate()=0;
+    virtual ~GiveGiftInterface(){}
 };
 //追求者类如下
 class Pursuit:public GiveGiftInterface

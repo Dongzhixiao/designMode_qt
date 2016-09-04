@@ -3,9 +3,9 @@
 int main(int argc, char *argv[])
 {
     Person *a = new Person("小红");
-    Tshirt *t = new Tshirt();
-    Skirt *s = new Skirt();
-    stocking *st = new stocking();
+    Finery *t = new Tshirt();
+    Finery *s = new Skirt();
+    Finery *st = new stocking();
     t->Decorate(a);
     s->Decorate(t);
     st->Decorate(s);
