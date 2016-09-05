@@ -5,9 +5,10 @@
 class LeiFenngInterface
 {
 public:
-    virtual LeiFeng *CreateLeiFeng()=0;
+    virtual LeiFeng *CreateLeiFeng() = 0;
+    virtual ~LeiFenngInterface(){}
 };
-class UndergraduateFactory:public LeiFenngInterface
+class UndergraduateFactory final:public LeiFenngInterface
 {
 public:
     LeiFeng *CreateLeiFeng() override
@@ -15,7 +16,7 @@ public:
         return new Undergraduate();
     }
 };
-class VolunteerFactory:public LeiFenngInterface
+class VolunteerFactory final:public LeiFenngInterface
 {
 public:
     LeiFeng *CreateLeiFeng() override

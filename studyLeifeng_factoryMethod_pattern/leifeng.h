@@ -17,11 +17,12 @@ public:
     {
         qDebug() <<"买米";
     }
+    virtual ~LeiFeng(){}
 };
 
-class Undergraduate:public LeiFeng
+class Undergraduate final:public LeiFeng
 {};
-class Volunteer:public LeiFeng
+class Volunteer final:public LeiFeng
 {};
 
 #endif // LEIFENG

@@ -10,7 +10,7 @@ class schoolGirl:public QObject
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
 public:
-    schoolGirl(QObject *parent = 0):_name("undefined"){}
+    explicit schoolGirl(QObject *parent = 0):_name("undefined"){}
     QString name() const
     {
         return _name;
@@ -34,22 +34,23 @@ public:
     virtual ~GiveGiftInterface(){}
 };
 //追求者类如下
-class Pursuit:public GiveGiftInterface
+class Pursuit final:public GiveGiftInterface
 {
 public:
-    Pursuit(schoolGirl *mm)
+    explicit Pursuit(schoolGirl *mm)
     {
         _mm = mm;
     }
-    void GiveDolls()
+    ~Pursuit(){delete _mm;}
+    void GiveDolls() override
     {
         qDebug() <<_mm->name()<<"送你洋娃娃！";
     }
-    void GiveFlowers()
+    void GiveFlowers() override
     {
         qDebug() <<_mm->name()<<"送你鲜花！";
     }
-    void GiveChocolate()
+    void GiveChocolate() override
     {
         qDebug() <<_mm->name()<<"送你巧克力！";
     }
@@ -57,10 +58,10 @@ private:
     schoolGirl *_mm;
 };
 //代理类如下
-class Proxy:public GiveGiftInterface
+class Proxy final:public GiveGiftInterface
 {
 public:
-    Proxy(schoolGirl *mm)
+    explicit Proxy(schoolGirl *mm)
     {
         _gg = new Pursuit(mm);
     }
@@ -68,15 +69,15 @@ public:
     {
         delete _gg;
     }
-    void GiveDolls()
+    void GiveDolls() override
     {
         _gg->GiveDolls();
     }
-    void GiveFlowers()
+    void GiveFlowers() override
     {
         _gg->GiveFlowers();
     }
-    void GiveChocolate()
+    void GiveChocolate() override
     {
         _gg->GiveChocolate();
     }

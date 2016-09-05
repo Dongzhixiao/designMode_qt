@@ -8,7 +8,7 @@ class Person
 {
     QString name;
 public:
-    Person(){}   //子类不想用构造函数，父类必须实现无参数构造函数(如果父类没有构造函数时，默认编译器产生的构造函数即可！)
+    explicit Person(){}   //子类不想用构造函数，父类必须实现无参数构造函数，跟默认构造函数一样。(如果父类没有子定义构造函数时，编译器产生的默认构造函数即可！)
     Person(QString n)
     {
         name = n;
