@@ -6,7 +6,7 @@
 class WorkExperience
 {
 public:
-    WorkExperience(QString ta,QString c):_timeArea(ta),_company(c){}
+    explicit WorkExperience(QString ta,QString c):_timeArea(ta),_company(c){}
     QString getTimeArea(){return _timeArea;}
     QString getCompney() {return _company;}
 private:
@@ -17,19 +17,19 @@ private:
 class DeepResume
 {
 public:
-    DeepResume(QString name):_name(name){}
-//    DeepResume(const DeepResume & r) //自己实现拷贝构造函数,注意第二行实现的深拷贝！！
-//    //注意：拷贝构造函数可以调用引用参数对象的私有成员！！
-//    //因为拷贝构造函数是放在本身这个类里的，而类中的函数可以访问这个类的对象的所有成员，当然包括私有成员了。
-//    {   _name = r._name;_sex=r._sex;_age=r._age;
-//        _we = new WorkExperience(*r._we);
-//    }
+    explicit DeepResume(QString name):_name(name){}
+    DeepResume(const DeepResume & r) //自己实现拷贝构造函数,注意第二行实现的深拷贝！！
+    //注意：拷贝构造函数可以调用引用参数对象的私有成员！！
+    //因为拷贝构造函数是放在本身这个类里的，而类中的函数可以访问这个类的对象的所有成员，当然包括私有成员了。
+    {   _name = r._name;_sex=r._sex;_age=r._age;
+        _we = new WorkExperience(*r._we);
+    }
     ~DeepResume()
     {
-        if(_we != NULL)
+        if(_we != nullptr)
         {
             delete _we;
-            _we = NULL;
+            _we = nullptr;
         }
     }
     void setPersonalInf(QString sex, QString age)
@@ -49,7 +49,7 @@ private:
     QString _name;
     QString _sex;
     QString _age;
-    WorkExperience * _we = NULL;
+    WorkExperience * _we = nullptr;
 };
 
 #endif // DEEPRESUME

@@ -6,7 +6,7 @@
 class Resume
 {
 public:
-    Resume(QString name):_name(name){}
+    explicit Resume(QString name):_name(name){}
 //    Resume(const Resume & r) //也可以自己实现拷贝构造函数
 //    {_name = r._name;_sex=r._sex;_age=r._age;_timeArea=r._timeArea;_company=r._company;}
     void setPersonalInf(QString sex, QString age)
