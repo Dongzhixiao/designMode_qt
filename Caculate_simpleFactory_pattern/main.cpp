@@ -1,8 +1,15 @@
+//#define use_origin
+
 #include "sign.h"
 #include "signfactory.h"
 #include "caculate.h"
 #include <QApplication>
 #include <QDebug>
+
+
+#ifdef use_origin
+#include <memory>
+#endif
 
 int main (int argc, char * argv[])
 {
@@ -18,7 +25,12 @@ int main (int argc, char * argv[])
     {}
     delete s;
 
-    caculate * c = new caculate;
+#ifdef use_origin
+    std::shared_ptr<caculate> c(new caculate);
+#else
+    QSharedPointer<caculate> c(new caculate);
+#endif
+
     c->show();
 
     return app.exec();
