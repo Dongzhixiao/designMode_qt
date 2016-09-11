@@ -1,3 +1,5 @@
+#define use_shearedPtr
+
 #ifndef DEEPRESUME
 #define DEEPRESUME
 #include <QString>
@@ -22,15 +24,22 @@ public:
     //注意：拷贝构造函数可以调用引用参数对象的私有成员！！
     //因为拷贝构造函数是放在本身这个类里的，而类中的函数可以访问这个类的对象的所有成员，当然包括私有成员了。
     {   _name = r._name;_sex=r._sex;_age=r._age;
+#ifdef use_shearedPtr
+        _we = QSharedPointer<WorkExperience>(new WorkExperience(*r._we));
+#else
         _we = new WorkExperience(*r._we);
+#endif
     }
     ~DeepResume()
     {
+#ifndef use_shearedPtr
         if(_we != nullptr)
         {
+            qDebug()<<"删除了构造的工作经验";
             delete _we;
             _we = nullptr;
         }
+#endif
     }
     void setPersonalInf(QString sex, QString age)
     {
@@ -38,7 +47,13 @@ public:
         _age = age;
     }
     void setWorkExperience(WorkExperience *we)
-    {_we = we;}
+    {
+#ifdef use_shearedPtr
+        _we = QSharedPointer<WorkExperience>(we);
+#else
+        _we = we;
+#endif
+    }
     void display()
     {
         qDebug() << _name<<","<<_sex<<","<<_age;
@@ -49,7 +64,11 @@ private:
     QString _name;
     QString _sex;
     QString _age;
-    WorkExperience * _we = nullptr;
+#ifdef use_shearedPtr
+    QSharedPointer<WorkExperience> _we;
+#else
+    WorkExperience *_we;
+#endif
 };
 
 #endif // DEEPRESUME

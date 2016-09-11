@@ -30,7 +30,6 @@ int main (int argc, char * argv[])
 #else
     QSharedPointer<caculate> c(new caculate);
 #endif
-
     c->show();
 
     return app.exec();
