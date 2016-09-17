@@ -1,9 +1,9 @@
-#define use_shearedPtr
-
 #ifndef DEEPRESUME
 #define DEEPRESUME
 #include <QString>
 #include <QtDebug>
+
+//#define use_shearedPtr  //如果不想使用智能指针，注释掉这一行即可
 
 class WorkExperience
 {
@@ -30,17 +30,19 @@ public:
         _we = new WorkExperience(*r._we);
 #endif
     }
+#ifndef use_shearedPtr
+    DeepResume & operator =(const DeepResume &) = delete;
     ~DeepResume()
     {
-#ifndef use_shearedPtr
+
         if(_we != nullptr)
         {
             qDebug()<<"删除了构造的工作经验";
             delete _we;
             _we = nullptr;
         }
-#endif
     }
+#endif
     void setPersonalInf(QString sex, QString age)
     {
         _sex = sex;

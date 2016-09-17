@@ -6,7 +6,7 @@
 class User
 {
 public:
-    User()=default;
+    User() = default;
     int getID(){return _id;}
     void setID(int id){_id = id;}
     QString getName(){return _name;}
@@ -16,36 +16,44 @@ private:
     QString _name;
 };
 
-class IUser
+class IUser:public QObject
 {
+    Q_OBJECT
 public:
     virtual void Insert(User user) = 0;
-    virtual User getUser(int id) = 0;
+    virtual User* getUser(int id) = 0;
 };
-class SqlServerUser: public IUser
+class SqlServerUser final: public IUser
 {
+    Q_OBJECT
 public:
+    Q_INVOKABLE SqlServerUser() = default;
     void Insert(User user) override
     {
+        Q_UNUSED(user);
         qDebug() <<"在SQL Server中给User表增加一条记录";
     }
-    User getUser(int id) override
+    User* getUser(int id) override
     {
+        Q_UNUSED(id);
         qDebug() <<"在SQL Server中根据id得到User表一条记录";
-//        return NULL;
+        return NULL;  //这里为了做例子，所以没有真正返回业务需要的指针，只是返回空指针做示范
     }
 };
-class AccessUser: public IUser
+class AccessUser final: public IUser
 {
+    Q_OBJECT
 public:
     void Insert(User user) override
     {
+        Q_UNUSED(user);
         qDebug() <<"在Access中给User表增加一条记录";
     }
-    User getUser(int id) override
+    User* getUser(int id) override
     {
+        Q_UNUSED(id);
         qDebug() <<"在Access中根据id得到User表一条记录";
-        //return nullptr;
+        return nullptr;   //这里为了做例子，所以没有真正返回业务需要的指针，只是返回空指针做示范
     }
 };
 
@@ -55,25 +63,30 @@ private:
     QString _departmentName;
 };
 
-class IDepartment
+class IDepartment:public QObject
 {
+    Q_OBJECT
 public:
     virtual void Insert(Department department) = 0;
 };
 class SqlServerDepartment:public IDepartment
 {
+    Q_OBJECT
 public:
     void Insert(Department department) override
     {
-         qDebug() <<"在SQL Server中给Department表增加一条记录";
+        Q_UNUSED(department);
+        qDebug() <<"在SQL Server中给Department表增加一条记录";
     }
 };
 class AccessDepartment:public IDepartment
 {
+    Q_OBJECT
 public:
     void Insert(Department department) override
     {
-         qDebug() <<"在Access中给Department表增加一条记录";
+        Q_UNUSED(department);
+        qDebug() <<"在Access中给Department表增加一条记录";
     }
 };
 
