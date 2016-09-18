@@ -16,18 +16,16 @@ private:
     QString _name;
 };
 
-class IUser:public QObject
+class IUser
 {
-    Q_OBJECT
 public:
     virtual void Insert(User user) = 0;
     virtual User* getUser(int id) = 0;
 };
 class SqlServerUser final: public IUser
 {
-    Q_OBJECT
 public:
-    Q_INVOKABLE SqlServerUser() = default;
+    SqlServerUser() = default;
     void Insert(User user) override
     {
         Q_UNUSED(user);
@@ -42,7 +40,6 @@ public:
 };
 class AccessUser final: public IUser
 {
-    Q_OBJECT
 public:
     void Insert(User user) override
     {
@@ -63,15 +60,13 @@ private:
     QString _departmentName;
 };
 
-class IDepartment:public QObject
+class IDepartment
 {
-    Q_OBJECT
 public:
     virtual void Insert(Department department) = 0;
 };
 class SqlServerDepartment:public IDepartment
 {
-    Q_OBJECT
 public:
     void Insert(Department department) override
     {
@@ -81,7 +76,6 @@ public:
 };
 class AccessDepartment:public IDepartment
 {
-    Q_OBJECT
 public:
     void Insert(Department department) override
     {
