@@ -30,7 +30,7 @@ public:
     void setAttack(int atk){_atk=atk;}
     int getDefense(){return _def;}
     void setDefense(int def){_def=def;}
-    RoleStateMemento *SaveState(){return new RoleStateMemento(_vit,_atk,_def);}
+    QSharedPointer<RoleStateMemento> SaveState(){return QSharedPointer<RoleStateMemento>(new RoleStateMemento(_vit,_atk,_def));}
     void RecoveryState(RoleStateMemento me){_vit=me.getVitality();_atk=me.getAttack();_def=me.getDefense();}
     void stateDisplay()
     {

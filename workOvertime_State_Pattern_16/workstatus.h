@@ -11,21 +11,22 @@ public:
     void setTime(int hour){_hour = hour;}
     bool getFinished(){return _finished;}
     void setFinished(bool finished){_finished = finished;}
-    void setState(State * s){_state = s;}
+    void setState(State * s){_state = QSharedPointer<State>(s);}
     void writeProgram();
 private:
     bool _finished = false;
-    int _hour;
-    State *_state;
+    int _hour = 0;
+    QSharedPointer<State> _state;
 };
 
 class State
 {
 public:
     virtual void writeProgram(Work w) = 0;
+    virtual ~State() = default;
 };
-//下面逻辑倒着申明类，否则需要前置声明，还要使用指针！也可以实现，以后玩玩！！
-class EveningState:public State
+//下面逻辑倒着申明类，否则需要前置声明，还要使用指针！
+class EveningState final:public State
 {
 public:
     void writeProgram(Work w) override
@@ -40,7 +41,7 @@ public:
         }
     }
 };
-class AfternoonState:public State
+class AfternoonState final:public State
 {
 public:
     void writeProgram(Work w) override
@@ -56,7 +57,7 @@ public:
         }
     }
 };
-class NoonState:public State
+class NoonState final:public State
 {
 public:
     void writeProgram(Work w) override
@@ -72,7 +73,7 @@ public:
         }
     }
 };
-class ForenoonState:public State
+class ForenoonState final:public State
 {
 public:
     void writeProgram(Work w) override

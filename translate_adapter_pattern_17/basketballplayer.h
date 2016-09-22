@@ -9,6 +9,7 @@ public:
     Player(QString name):_name(name){}
     virtual void Attack() = 0;
     virtual void Defense() = 0;
+    virtual ~Player() = default;
 protected:
     QString _name;
 };
@@ -25,7 +26,7 @@ public:
         qDebug()<<"前锋"<<_name<<"防守！";
     }
 };
-class Center:public Player
+class Center final:public Player
 {
 public:
     Center(QString name):Player(name){}
@@ -38,7 +39,7 @@ public:
         qDebug()<<"中锋"<<_name<<"防守！";
     }
 };
-class Guards:public Player
+class Guards final:public Player
 {
 public:
     Guards(QString name):Player(name){}

@@ -26,7 +26,7 @@ public:
          if (id != QMetaType::UnknownType)
              result = static_cast<IUser*>(QMetaType::create(id));
          else
-             qDebug()<<"没有在Qt中注册成功该类";
+             qDebug()<<"没有在Qt中注册成功"<<className<<"类";
         return result;
     }
     static IDepartment* CreatDepartment()
@@ -37,7 +37,7 @@ public:
          if (id != QMetaType::UnknownType)
              result = static_cast<IDepartment*>(QMetaType::create(id));
          else
-             qDebug()<<"没有在Qt中注册成功该类";
+             qDebug()<<"没有在Qt中注册成功"<<className<<"类";
         return result;
     }
 private:

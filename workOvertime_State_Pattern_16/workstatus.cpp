@@ -1,7 +1,7 @@
 #include "workstatus.h"
 
 Work::Work()
-{_state = new ForenoonState();}
+{_state = QSharedPointer<State>(new ForenoonState());}
 
 void Work::writeProgram()
 {_state->writeProgram(*this);}
