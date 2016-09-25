@@ -13,7 +13,7 @@ public:
 protected:
     QString _name;
 };
-class Forwards:public Player
+class Forwards final:public Player
 {
 public:
     Forwards(QString name):Player(name){}
@@ -70,23 +70,20 @@ public:
 private:
     QString _name;
 };
-class Translator:public Player   //相当于适配器
+class Translator final:public Player   //相当于适配器
 {
 public:
-    Translator(QString name):Player(name){fc = new ForeignCenter();fc->setName(name);}
-    Translator(const Translator &) = delete;    //直接删了，防止浅拷贝
-    Translator & operator =(const Translator &) = delete;  //直接删了，防止浅拷贝
-    ~Translator(){delete fc;}
+    Translator(QString name):Player(name){_fc = QSharedPointer<ForeignCenter>(new ForeignCenter());_fc->setName(name);}
     void Attack() override
     {
-        fc->TranslateAttack();
+        _fc->TranslateAttack();
     }
     void Defense() override
     {
-        fc->TranslateDefense();
+        _fc->TranslateDefense();
     }
 private:
-    ForeignCenter *fc;
+    QSharedPointer<ForeignCenter> _fc;
 };
 
 #endif // BASKETBALLPLAYER

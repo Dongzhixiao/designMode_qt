@@ -6,9 +6,7 @@
 class RoleStateMemento
 {
 public:
-    //RoleStateMemento()=default;
     RoleStateMemento(int vit,int atk,int def):_vit(vit),_atk(atk),_def(def){}
-    //RoleStateMemento(const RoleStateMemento&)=delete;
     int getVitality(){return _vit;}
     void setVitality(int vit){_vit=vit;}
     int getAttack(){return _atk;}
