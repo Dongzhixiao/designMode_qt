@@ -4,7 +4,6 @@
 #include <QSharedPointer>
 #include <QList>
 class Aggregate;
-
 class Iterator   //Iterator迭代器抽象类
 {
 public:
@@ -41,7 +40,6 @@ class ConcreteAggregate final : public Aggregate
 public:
     Iterator * CreateIterator() override {return new ConcreteIterator(this);}
     int Count() {return _items.count();}
-//    QString& opeartor=(const QString & s) {}
     QString& operator[](int i) {return _items[i];}
     void set(QString s){_items.append(s);}
 private:

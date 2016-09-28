@@ -39,9 +39,8 @@ class Pursuit final:public GiveGiftInterface
 public:
     explicit Pursuit(schoolGirl *mm)
     {
-        _mm = mm;
+        _mm = QSharedPointer<schoolGirl>(mm);
     }
-    ~Pursuit(){delete _mm;}
     void GiveDolls() override
     {
         qDebug() <<_mm->name()<<"送你洋娃娃！";
@@ -55,7 +54,7 @@ public:
         qDebug() <<_mm->name()<<"送你巧克力！";
     }
 private:
-    schoolGirl *_mm;
+    QSharedPointer<schoolGirl> _mm;
 };
 //代理类如下
 class Proxy final:public GiveGiftInterface
@@ -63,11 +62,7 @@ class Proxy final:public GiveGiftInterface
 public:
     explicit Proxy(schoolGirl *mm)
     {
-        _gg = new Pursuit(mm);
-    }
-    ~Proxy()
-    {
-        delete _gg;
+        _gg = QSharedPointer<Pursuit>(new Pursuit(mm));
     }
     void GiveDolls() override
     {
@@ -82,7 +77,7 @@ public:
         _gg->GiveChocolate();
     }
 private:
-    Pursuit *_gg;
+    QSharedPointer<Pursuit> _gg;
 };
 
 #endif // PERSUITGIRL
