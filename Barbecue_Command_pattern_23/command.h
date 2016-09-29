@@ -16,18 +16,46 @@ public:
     }
 };
 
-class Command
+class Command   //抽象命令类
 {
 public:
-    Command(Barbecuer* receiver)
+    explicit Command(Barbecuer* receiver)
     {
-
+        _receiver = QSharedPointer<Barbecuer>(receiver);
     }
-
+    virtual void ExcuteCommand() = 0;
+    virtual ~Command(){}
 protected:
-    Barbecuer* _receiver;
+    QSharedPointer<Barbecuer> _receiver;
 };
 
+class BakeMuttonCommand final : public Command
+{
+public:
+    explicit BakeMuttonCommand(Barbecuer* receiver):Command(receiver){}
+    void ExcuteCommand() override {_receiver->BakeMutton();}
+};
 
+class BakeChickenWingCommand final : public Command
+{
+public:
+    explicit BakeChickenWingCommand(Barbecuer* receiver):Command(receiver){}
+    void ExcuteCommand() override {_receiver->BakeChickenWing();}
+};
+
+class Waiter
+{
+public:
+    void SetOrder(Command * command)
+    {
+        _command = QSharedPointer<Command>(command);
+    }
+    void Notify()
+    {
+        _command->ExcuteCommand();
+    }
+private:
+    QSharedPointer<Command> _command;
+};
 
 #endif // COMMAND_H

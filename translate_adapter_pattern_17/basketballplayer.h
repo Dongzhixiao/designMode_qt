@@ -6,7 +6,7 @@
 class Player
 {
 public:
-    Player(QString name):_name(name){}
+    explicit Player(QString name):_name(name){}
     virtual void Attack() = 0;
     virtual void Defense() = 0;
     virtual ~Player() = default;
@@ -16,7 +16,7 @@ protected:
 class Forwards final:public Player
 {
 public:
-    Forwards(QString name):Player(name){}
+    explicit Forwards(QString name):Player(name){}
     void Attack() override
     {
         qDebug()<<"前锋"<<_name<<"攻击！";
@@ -29,7 +29,7 @@ public:
 class Center final:public Player
 {
 public:
-    Center(QString name):Player(name){}
+    explicit Center(QString name):Player(name){}
     void Attack() override
     {
         qDebug()<<"中锋"<<_name<<"攻击！";
@@ -42,7 +42,7 @@ public:
 class Guards final:public Player
 {
 public:
-    Guards(QString name):Player(name){}
+    explicit Guards(QString name):Player(name){}
     void Attack() override
     {
         qDebug()<<"后卫"<<_name<<"攻击！";
@@ -73,7 +73,7 @@ private:
 class Translator final:public Player   //相当于适配器
 {
 public:
-    Translator(QString name):Player(name){_fc = QSharedPointer<ForeignCenter>(new ForeignCenter());_fc->setName(name);}
+    explicit Translator(QString name):Player(name){_fc = QSharedPointer<ForeignCenter>(new ForeignCenter());_fc->setName(name);}
     void Attack() override
     {
         _fc->TranslateAttack();

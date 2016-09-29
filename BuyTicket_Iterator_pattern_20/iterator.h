@@ -25,7 +25,7 @@ class ConcreteAggregate;
 class ConcreteIterator final: public Iterator
 {
 public:
-    ConcreteIterator(ConcreteAggregate * a);
+    explicit ConcreteIterator(ConcreteAggregate * a);
     QString First() override ;
     QString Next() override ;
     bool IsDone() override;
