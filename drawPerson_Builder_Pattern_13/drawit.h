@@ -1,6 +1,8 @@
 #ifndef DRAWIT
 #define DRAWIT
 #include <QWidget>
+#define use_sharedPtr
+
 #include <QPaintEvent>
 #include <QPen>
 #include <QtDebug>
@@ -8,7 +10,7 @@
 class DrawIt:public QWidget
 {
 public:
-    explicit DrawIt(QWidget *paretn=0);
+    explicit DrawIt(QWidget *parent=0);
     ~DrawIt();
     void setPen(QPen *);
 protected:
@@ -18,10 +20,14 @@ protected:
     virtual void drawArm(QPainter *)=0;
     virtual void drawLeg(QPainter *)=0;
 private:
+#ifdef use_sharedPtr
+    QSharedPointer<QPen> _pen;
+#else
     QPen *_pen;
+#endif
 };
 
-class DrawThinPerson:public DrawIt
+class DrawThinPerson final:public DrawIt
 {
 protected:
     void drawHead(QPainter *) override;
@@ -30,7 +36,7 @@ protected:
     void drawLeg(QPainter *) override;
 };
 
-class DrawFatPerson:public DrawIt
+class DrawFatPerson final:public DrawIt
 {
 protected:
     void drawHead(QPainter *) override;
@@ -52,7 +58,7 @@ public:
         else
         {
             qDebug()<<"undefined input";
-            throw;
+            throw 1;
         }
     }
 //    ~PersonDirector()   //这个类就是为了返回其内建的一个DrawIt，因此不用析构掉，否则main中delete后就会窗口消失！！！

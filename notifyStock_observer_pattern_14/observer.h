@@ -2,26 +2,22 @@
 #define OBSERVER
 #include <QtDebug>
 #include <QString>
+#include <QSharedPointer>
 #include "subject.h"
 
 class Observer
 {
 public:
 //    Observer(){}
-    Observer(QString name, Subject *sub):_name(name),_sub(sub){}
-    ~Observer()
-    {
-        delete _sub;
-//        _sub = nullptr;
-    }
-
+    Observer(QString name, Subject *sub):_name(name),_sub(QSharedPointer<Subject>(sub)){}
+    virtual ~Observer() = default;
     virtual void update()=0;
 protected:
     QString _name;
-    Subject* _sub;
+    QSharedPointer<Subject> _sub;
 };
 
-class StockObserver:public Observer
+class StockObserver final:public Observer
 {
 public:
     StockObserver(QString name, Subject *sub):Observer(name, sub){}
@@ -31,7 +27,7 @@ public:
     }
 };
 
-class AnimationObserver:public Observer
+class AnimationObserver final:public Observer
 {
 public:
     AnimationObserver(QString name, Subject *sub):Observer(name, sub){}

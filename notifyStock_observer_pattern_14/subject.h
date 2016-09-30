@@ -9,13 +9,16 @@ class Subject
 {
 public:
 //    Subject(){}
-    ~Subject()
+    virtual ~Subject()
     {
+#if 1
+        qDeleteAll(_observers);
+#else
         for(auto i:_observers)
         {            
             delete i;
-//            i = nullptr;
         }
+#endif
         _observers.clear();
     }
     virtual void Attach(Observer *observer) = 0;
@@ -31,7 +34,7 @@ protected:
 class Boss:public Subject
 {
 public:
-    Boss(){Subject::_action = QString("我是老板！");}
+    Boss(){Subject::_action = QString("I am boss!");}
     void Attach(Observer *observer) override
     {
         _observers.append(observer);
@@ -39,6 +42,8 @@ public:
     void Detch(Observer *observer) override
     {
         _observers.removeOne(observer);
+        delete observer;
+        observer = nullptr;
     }
     void Notify() override;  //override不能写在类外面！！
 };
@@ -46,7 +51,7 @@ public:
 class Secretary:public Subject
 {
 public:
-    Secretary(){Subject::_action = QString("我是秘书！");}   //子类为啥不能初始化父类的成员变量
+    Secretary(){Subject::_action = QString("I am secretary!");}   //子类为啥不能初始化父类的成员变量
     void Attach(Observer *observer) override
     {
         _observers.append(observer);
@@ -54,6 +59,8 @@ public:
     void Detch(Observer *observer) override
     {
         _observers.removeOne(observer);
+        delete observer;
+        observer = nullptr;
     }
     void Notify() override;  //override不能写在类外面！！
 };

@@ -2,23 +2,33 @@
 #include <QPen>
 #include <QPainter>
 
-DrawIt::DrawIt(QWidget *paretn)
+DrawIt::DrawIt(QWidget *parent):QWidget(parent)
 {
+#ifdef use_sharedPtr
+    _pen = QSharedPointer<QPen>(new QPen(QColor(255,0,0,255)));
+#else
     _pen = new QPen(QColor(255,0,0,255));
+#endif
 }
 DrawIt::~DrawIt()
 {
+#ifndef use_sharedPtr
     if(_pen != NULL)
     {
         delete _pen;
         _pen = NULL;
     }
+#endif
 }
 void DrawIt::setPen(QPen *p)
 {
+#ifdef use_sharedPtr
+    _pen = QSharedPointer<QPen>(p);
+#else
     if(_pen != NULL)
         delete _pen;
     _pen = p;
+#endif
 }
 
 void DrawIt::paintEvent(QPaintEvent *e)

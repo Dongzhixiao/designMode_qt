@@ -5,6 +5,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc,argv);
     PersonDirector *pd = new PersonDirector("thin");
+
     DrawIt *d = pd->creatPersonDraw();
     d->show();
     delete pd;

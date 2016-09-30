@@ -1,3 +1,5 @@
+#define use_sharedPtr
+
 #ifndef FUND
 #define FUND
 #include <QString>
@@ -27,10 +29,17 @@ class Fund
 public:
     Fund()
     {
+#ifdef use_sharedPtr
+        _stock1 = QSharedPointer<Stock1>(new Stock1());
+        _stock2 = QSharedPointer<Stock2>(new Stock2());
+        _stock3 = QSharedPointer<Stock3>(new Stock3());
+#else
         _stock1 = new Stock1();
         _stock2 = new Stock2();
         _stock3 = new Stock3();
+#endif
     }
+#ifndef use_sharedPtr
     Fund(const Fund & f)   //一般类里面有指针，且析构函数销毁了，则需要完成复制构造函数来深拷贝！！
     {
         _stock1 = new Stock1(*f._stock1);
@@ -55,13 +64,13 @@ public:
     ~Fund()
     {
         delete _stock1;
-        delete _stock2;
-        delete _stock3;
         _stock1 = NULL;
+        delete _stock2;
         _stock2 = NULL;
+        delete _stock3;
         _stock3 = NULL;
     }
-
+#endif
     void buy()
     {
         _stock1->buy();
@@ -72,13 +81,18 @@ public:
     {
         _stock1->sell();
         _stock2->sell();
-
         _stock3->sell();
     }
 private:
+#ifdef use_sharedPtr
+    QSharedPointer<Stock1> _stock1;
+    QSharedPointer<Stock2> _stock2;
+    QSharedPointer<Stock3> _stock3;
+#else
     Stock1 * _stock1;
     Stock2 * _stock2;
     Stock3 * _stock3;
+#endif
 };
 
 #endif // FUND
