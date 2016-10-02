@@ -43,7 +43,7 @@ class CommonManager final : public Manager   //经理类
 public:
     explicit CommonManager(QString name):Manager(name){}
     void RequestApplications(const Request & request) override
-    //注意，参数如果有const实例，则函数里面调用该实例的方法必须是const函数
+    //注意，函数的参数如果有const实例，则函数里面调用该实例的方法必须是const函数
     {
         if(request.getRequestType() == "请假" && request.getNumber()<=2)
         {
