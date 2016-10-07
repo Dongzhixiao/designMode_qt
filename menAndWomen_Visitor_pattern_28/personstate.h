@@ -12,8 +12,9 @@ public:
     virtual void getManConclusion(Man *concreteElementA) = 0;
     virtual void getWomanConclusion(Woman *concreteElementB) = 0;
     virtual QString getName(){return _name;}
+    virtual ~Action() = default;
 private:
-    QString _name = "";
+    QString _name;
 };
 class Person
 {
@@ -21,18 +22,18 @@ public:
     virtual void Accept(Action *visitor) = 0;
     virtual QString getName(){return _name;}
 private:
-    QString _name = "";
+    QString _name;
 };
-class Success:public Action
+class Success final : public Action
 {
 public:
     void getManConclusion(Man *concreteElementA) override;
     void getWomanConclusion(Woman *concreteElementB) override;
-    QString getName() override {return _name;}
+    QString getName() override {return _name;}   //注意：虽然子类和父类这个函数样子一样，但是必须重写，否则返回的是父类的_name！！
 private:
     QString _name = "成功";
 };
-class Failing:public Action
+class Failing final : public Action
 {
 public:
     void getManConclusion(Man *concreteElementA) override;
@@ -41,7 +42,7 @@ public:
 private:
     QString _name = "失败";
 };
-class Amativeness:public Action
+class Amativeness final : public Action
 {
 public:
     void getManConclusion(Man *concreteElementA) override;
@@ -49,8 +50,9 @@ public:
     QString getName() override {return _name;}
 private:
     QString _name = "恋爱";
+
 };
-class Man:public Person
+class Man final : public Person
 {
 public:
     void Accept(Action *visitor)
@@ -76,18 +78,27 @@ private:
 class ObjectStructure
 {
 public:
-    void Attach(Person *p){elements.append(p);}
-    void Detach(Person *p){elements.removeOne(p);delete p;p = NULL;}  //不确定行为，不知道指针是否实现了操作符==!!根据main的结果似乎实现了
+    void Attach(Person *p){_elements.append(QSharedPointer<Person>(p));}
+    void Detach(Person *p)
+    {
+        foreach (auto iterator, _elements)
+        {
+            if(iterator.data() == p)
+            {
+                _elements.removeOne(iterator);   //QSharedPointer实现了operator==()函数，因此可以这样用。
+                break;
+            }
+        }
+    }
     void Display(Action *a)
     {
-        for(auto e :elements)
+        for(auto e :_elements)
         {
             e->Accept(a);
         }
     }
-
 private:
-    QList<Person *> elements = QList<Person *>();
+    QList<QSharedPointer<Person>> _elements;
 };
 
 #endif // PERSONSTATE

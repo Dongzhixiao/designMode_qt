@@ -1,7 +1,7 @@
 #include "personstate.h"
 #include <QtDebug>
 
-int main(int argc, char *argv[])
+int main()
 {
     ObjectStructure *o = new ObjectStructure();
     Man *a = new Man();
@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     o->Attach(b);
     Success *v = new Success();
     o->Detach(a);
-    //o->Detach(b);
+//    o->Detach(b);
     o->Display(v);
     return 0;
 }
