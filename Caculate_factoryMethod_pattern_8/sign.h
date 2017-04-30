@@ -1,4 +1,4 @@
-#ifndef SIGN
+﻿#ifndef SIGN
 #define SIGN
 #include <iostream>
 
@@ -25,36 +25,36 @@ public:
     }
 };
 //下面用到继承
-class signAdd:public Sign   //加法类，继承符号类
+class signAdd final:public Sign   //加法类，继承符号类
 {
-    double getResult()
+    double getResult()  override
     {
         _Result = _A + _B;
         return _Result;
     }
 };
 
-class signMinus:public Sign  //减法类，继承符号类
+class signMinus final:public Sign  //减法类，继承符号类
 {
-    double getResult()
+    double getResult() override
     {
         _Result = _A - _B;
         return _Result;
     }
 };
 
-class signMultiply:public Sign
+class signMultiply final :public Sign
 {
-    double getResult()
+    double getResult() override
     {
         _Result = _A * _B;
         return _Result;
     }
 };
 
-class signDivide:public Sign
+class signDivide final :public Sign
 {
-    double getResult()
+    double getResult() override
     {
         if(_B==0){
             std::cerr<<"can't divide zero"<<std::endl;
